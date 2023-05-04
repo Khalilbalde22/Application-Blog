@@ -1,6 +1,7 @@
  <!--================Hero Banner start =================--> 
 
-<?php 
+<?php
+use App\Auth\DBAuth;
 use App\Autoloader ;
 use App\Titre\Titre_pages;
 use App\Page_Autoload;
@@ -9,25 +10,33 @@ use App\Page_Autoload;
 include 'app/Autoloader.php';
 Autoloader::register();
 
+//l'authent
+
+$auth = new DBAuth('application_blog');
+if($auth->loged()){
+    
+    $auth->forbidden();
+
+}else{
 if(empty($_GET)){
 ob_start();
-    require 'pages/dashboard.php';
+    require 'pages/admin/Articles/index.php';
 $content = ob_get_clean();
-}
-else{
+}else{
 //recuperation du resultat fourni par la class page_Autoload et stocker dans une variable qui sera affichée dans default.php 
 ob_start();
-$page = new Page_Autoload($_GET['page']);
-$page->getPages();
+   $page = new Page_Autoload($_GET['page']);
+    $page->getPages();
 $content = ob_get_clean();
-//appel de la fonction du titre de la page
-$titre = Titre_pages::getTitre($_GET['page']);
-//Dinamisation du contenu de la baniere
-$description = Titre_pages::getDescription($_GET['page']);
+    //appel de la fonction du titre de la page
+    $titre = Titre_pages::getTitre($_GET['page']);
+    //Dinamisation du contenu de la baniere
+    $description = Titre_pages::getDescription($_GET['page']);
 
+    }
+    require 'pages/template/default.php';
 }
 
-require 'pages/template/default.php';
     
 ?>
 
