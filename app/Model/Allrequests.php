@@ -7,17 +7,33 @@ use PDO;
 
 class Allrequests extends Database{
     /**retourn un tableau des articles */
-    public function listArticles() {
-        $req = $this->getPdo()->prepare("SELECT articles.id, articles.titre, articles.contenu, articles.auteur, articles.description, articles.date, categories.reference, articles.datemodiff 
-                                        FROM application_blog.articles 
-                                        LEFT JOIN application_blog.categories 
-                                            ON categorie_id = categories.id 
-                                        ");
+    public function listArticles($limit = null, $offset = 0) {
+        if(is_null($limit)){
+            $req = $this->getPdo()->prepare("SELECT articles.id, articles.titre, articles.contenu, articles.auteur, articles.description, articles.date, categories.reference, articles.datemodiff 
+                                            FROM application_blog.articles 
+                                            LEFT JOIN application_blog.categories 
+                                                ON categorie_id = categories.id 
+                                                ORDER BY date DESC
+                                            ");
 
-        $req->execute();
-        $datas = $req->fetchAll(PDO::FETCH_OBJ);
-        
-        return $datas;
+            $req->execute();
+            $datas = $req->fetchAll(PDO::FETCH_OBJ);
+            
+            return $datas;
+            
+        }else{
+            $req = $this->getPdo()->prepare("SELECT articles.id, articles.titre, articles.contenu, articles.auteur, articles.description, articles.date, categories.reference, articles.datemodiff 
+                                            FROM application_blog.articles 
+                                            LEFT JOIN application_blog.categories 
+                                                ON categorie_id = categories.id 
+                                                ORDER BY date DESC
+                                                LIMIT $limit ");
+
+            $req->execute();
+            $datas = $req->fetchAll(PDO::FETCH_OBJ);
+            
+            return $datas;
+        }
     }
     /**
         *return un objet contenant toute les categories
@@ -43,7 +59,9 @@ class Allrequests extends Database{
         $ArticlCategorie = $req->fetchAll(PDO::FETCH_OBJ);
         return $ArticlCategorie;
     }
-
+    /**
+        *return un objet
+     */
     public function listDernierArticles(){
         $req = $this->getPdo()->prepare("SELECT * FROM application_blog.articles ORDER BY id DESC LIMIT 3 ");
         $req->execute();
@@ -61,23 +79,26 @@ class Allrequests extends Database{
         return $result ;
 
     }
-    
+    /**
+        *Creation de l'article
+     */
     public function create(){
          if(isset($_POST['submit'])){
     
         $titre = $this->security($_POST['titre']);
         $contenu = $this->security($_POST['contenu']);
         $description = $this->security($_POST['description']);
+        $image = $this->security($_POST['image']);
         $auteur = $this->security($_POST['auteur']);
         $date = date('Y-m-d');
         $categorie = $this->security($_POST['categorie_id']);
 
-        $req = $this->getPdo()->prepare("INSERT `application_blog`.`articles` SET `titre`= '$titre', `contenu`= '$contenu', `description`= '$description',`auteur`= '$auteur', `date`= '$date',`categorie_id`= '$categorie'");
+        $req = $this->getPdo()->prepare("INSERT `application_blog`.`articles` SET `titre`= '$titre', `contenu`= '$contenu', `description`= '$description',`image`= '$image',`auteur`= '$auteur', `date`= '$date',`categorie_id`= '$categorie'");
         $req->execute();
         if($req){
             // header('location: admin.php?page=edit&id='.$this->getPdo()->lastInsertId());  
         ?>
-        <div class="alert alert-success">article modifier avec succee !</div>
+        <div class="alert alert-success">article ajouté avec succée !</div>
         <?php       
         }
     }
@@ -88,7 +109,11 @@ class Allrequests extends Database{
         $this->getPdo()->lastInsertId();
     }
 
-
+    /** 
+        *modificaition de l'article
+        * @param integer $id
+        *
+    */
     public function update($id){
     if(isset($_POST['submit'])){
     

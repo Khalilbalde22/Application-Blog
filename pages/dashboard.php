@@ -8,7 +8,7 @@ use App\Table\Article;
 
 $db = new Allrequests('application_blog');
 
-$listArticles = $db->listArticles();
+$listArticles = $db->listArticles(5);
 $listCategorie = $db->listCategories();
 $listDernierArticle = $db->listDernierArticles();
 ?>

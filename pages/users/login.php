@@ -19,11 +19,19 @@ use App\Bootstrap;
     $form = new Bootstrap($_POST);
 
 ?>
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <h1>Connexion</h1>
+        <form  method="post">
 
-<form  method="post">
+            <?= $form->input('username', 'username') ?>
+            <?= $form->input('password', 'password', 'password') ?>
+            <?= $form->submit()?>
 
-    <?= $form->input('username', 'username') ?>
-    <?= $form->input('password', 'password', 'password') ?>
-    <?= $form->submit()?>
-
-</form>
+        </form>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>

@@ -11,16 +11,22 @@ use App\Model\Allrequests;
     $form = new Bootstrap($_POST);
 
 ?>
-
-
-<form  method="post">
-
-    <?= $form->input('titre', 'username') ?>
-    <?= $form->input('contenu', 'contenu', ['type' => 'textarea']) ?>
-    <?= $form->input('description', 'description') ?>
-    <?= $form->input('auteur', 'auteur') ?>
-    <?= $form->input('date', 'date', ['type' => 'date']) ?>
-    <?= $form->select('categorie_id', 'categorie', $categories) ?>
-    <?= $form->submit()?>
-
-</form>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            
+            <form  method="post">
+                <?= $form->input('titre', 'username') ?>
+                <?= $form->input('contenu', 'contenu', ['type' => 'textarea']) ?>
+                <?= $form->input('description', 'description') ?>
+                <?= $form->input('image', 'image') ?>
+                <?= $form->input('auteur', 'auteur') ?>
+                <?= $form->input('date', 'date', ['type' => 'date']) ?>
+                <?= $form->select('categorie_id', 'categorie', $categories) ?>
+                <?= $form->submit()?>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>

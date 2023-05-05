@@ -12,10 +12,18 @@ use App\Model\Allrequests;
 
 ?>
 
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+      
+            <form  method="post">
 
-<form  method="post">
+                <?= $form->input('reference', 'reference') ?>
+                <?= $form->submit()?>
 
-    <?= $form->input('reference', 'reference') ?>
-    <?= $form->submit()?>
-
-</form>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>

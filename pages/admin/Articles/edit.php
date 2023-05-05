@@ -13,14 +13,22 @@ use App\Model\Allrequests;
 
 ?>
 
+<div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            
+            <form  method="post">
 
-<form  method="post">
+                <?= $form->input('titre', 'username') ?>
+                <?= $form->input('contenu', 'contenu', ['type' => 'textarea']) ?>
+                <?= $form->input('description', 'description') ?>
+                <?= $form->input('auteur', 'auteur') ?>
+                <?= $form->select('categorie_id', 'categorie', $categories) ?>
+                <?= $form->submit()?>
 
-    <?= $form->input('titre', 'username') ?>
-    <?= $form->input('contenu', 'contenu', ['type' => 'textarea']) ?>
-    <?= $form->input('description', 'description') ?>
-    <?= $form->input('auteur', 'auteur') ?>
-    <?= $form->select('categorie_id', 'categorie', $categories) ?>
-    <?= $form->submit()?>
-
-</form>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>

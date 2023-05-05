@@ -4,7 +4,7 @@ namespace App ;
 class Bootstrap extends Formulaire{
 
     private function row($contenu){
-        return '<div class = "row" style="margin-left:400px;"> <div class="col-md-6" >'.$contenu.'</div></div>';
+        return '<div class = "row" > <div class="col-md-12" >'.$contenu.'</div></div>';
     }
 
     public function entourer($html){
@@ -30,7 +30,7 @@ class Bootstrap extends Formulaire{
       
         // var_dump($options);
         $label = '<label>'.$name.'</label> ';
-        $input = '<select class = "form-control col-md-6" style="margin-left:400px; margin-top:10px;" name="'.$name.'">';
+        $input = '<select class = "form-control col-md-6" style="margin-top:10px;" name="'.$name.'">';
             foreach($options as $k => $v) {
                 $attributs = '';
                 if($k === $this->getValue($name) ){
